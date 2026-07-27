@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Discord Login</title>
+</head>
+<body>
+  <div id="app">Checking login...</div>
+
+  <script>
+    fetch('/api/me', { credentials: 'include' })
+      .then(async (res) => {
+        if (!res.ok) throw new Error();
+        return res.json();
+      })
+      .then((user) => {
+        document.getElementById('app').innerHTML =
+          `<h2>Welcome ${user.username}</h2>`;
+      })
+      .catch(() => {
+        document.getElementById('app').innerHTML =
+          `<button onclick="window.location='/api/login'">
+              Sign in with Discord
+           </button>`;
+      });
+  </script>
+</body>
+</html>
